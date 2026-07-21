@@ -24,6 +24,9 @@
 #include <string_view>
 #include <fstream>
 
+#include <regex>
+#include <misc/cpp/imgui_stdlib.h>
+
 using namespace mq::datatypes;
 
 PreSetup("MQ2ItemDisplay");
@@ -75,7 +78,28 @@ public:
 	static constexpr inline bool default_persistWindowBounds = false;
 
 	static constexpr inline bool default_lootButtonsEnabled = true;
-	static constexpr inline bool default_lucyButtonEnabled = true;
+	static const inline std::string default_button01URL = "https://lucy.allakhazam.com/item.html?id=%id%";
+	static const inline std::string default_button01Name = "Lucy";
+	static const inline std::string default_button02URL;
+	static const inline std::string default_button02Name;
+	static const inline std::string default_cust01Name = "Keep";
+	static const inline std::string default_cust01Action;
+	static constexpr inline bool default_cust01PickupItemEnabled = false;
+	static const inline std::string default_cust02Name = "Sell";
+	static const inline std::string default_cust02Action;
+	static constexpr inline bool default_cust02PickupItemEnabled = false;
+	static const inline std::string default_cust03Name = "Bank";
+	static const inline std::string default_cust03Action;
+	static constexpr inline bool default_cust03PickupItemEnabled = false;
+	static const inline std::string default_cust04Name = "Tribute";
+	static const inline std::string default_cust04Action;
+	static constexpr inline bool default_cust04PickupItemEnabled = false;
+	static const inline std::string default_cust05Name = "Ignore";
+	static const inline std::string default_cust05Action;
+	static constexpr inline bool default_cust05PickupItemEnabled = false;
+	static const inline std::string default_cust06Name = "Announce";
+	static const inline std::string default_cust06Action;
+	static constexpr inline bool default_cust06PickupItemEnabled = false;
 	static constexpr inline bool default_showSpellInfoOnItems = true;
 	static constexpr inline bool default_showSpellInfoOnSpells = true;
 	static constexpr inline MQColor default_spellColor = "#00ffff";
@@ -84,8 +108,57 @@ public:
 	inline bool IsLootButtonsEnabled() const { return m_lootButtonsEnabled; }
 	void SetLootButtonsEnabled(bool enabled);
 
-	inline bool IsLucyButtonEnabled() const { return m_lucyButtonEnabled; }
-	void SetLucyButtonEnabled(bool enabled);
+	inline std::string Button01URL() const { return m_button01URL; }
+	void SetButton01URL(std::string url);
+	inline std::string Button01Name() const { return m_button01Name; }
+	void SetButton01Name(std::string name);
+
+	inline std::string Button02URL() const { return m_button02URL; }
+	void SetButton02URL(std::string url);
+	inline std::string Button02Name() const { return m_button02Name; }
+	void SetButton02Name(std::string name);
+
+	inline std::string Cust01ButtonAction() const { return m_cust01Action; }
+	void SetCust01Action(std::string action);
+	inline std::string Cust01ButtonName() const { return m_cust01Name; }
+	void SetCust01Name(std::string name);
+	inline bool IsCust01PickupItemEnabled() const { return m_cust01PickupItemEnabled; }
+	void SetCust01PickupItemEnabled(bool enabled);
+
+	inline std::string Cust02ButtonAction() const { return m_cust02Action; }
+	void SetCust02Action(std::string action);
+	inline std::string Cust02ButtonName() const { return m_cust02Name; }
+	void SetCust02Name(std::string name);
+	inline bool IsCust02PickupItemEnabled() const { return m_cust02PickupItemEnabled; }
+	void SetCust02PickupItemEnabled(bool enabled);
+
+	inline std::string Cust03ButtonAction() const { return m_cust03Action; }
+	void SetCust03Action(std::string action);
+	inline std::string Cust03ButtonName() const { return m_cust03Name; }
+	void SetCust03Name(std::string name);
+	inline bool IsCust03PickupItemEnabled() const { return m_cust03PickupItemEnabled; }
+	void SetCust03PickupItemEnabled(bool enabled);
+
+	inline std::string Cust04ButtonAction() const { return m_cust04Action; }
+	void SetCust04Action(std::string action);
+	inline std::string Cust04ButtonName() const { return m_cust04Name; }
+	void SetCust04Name(std::string name);
+	inline bool IsCust04PickupItemEnabled() const { return m_cust04PickupItemEnabled; }
+	void SetCust04PickupItemEnabled(bool enabled);
+
+	inline std::string Cust05ButtonAction() const { return m_cust05Action; }
+	void SetCust05Action(std::string action);
+	inline std::string Cust05ButtonName() const { return m_cust05Name; }
+	void SetCust05Name(std::string name);
+	inline bool IsCust05PickupItemEnabled() const { return m_cust05PickupItemEnabled; }
+	void SetCust05PickupItemEnabled(bool enabled);
+
+	inline std::string Cust06ButtonAction() const { return m_cust06Action; }
+	void SetCust06Action(std::string action);
+	inline std::string Cust06ButtonName() const { return m_cust06Name; }
+	void SetCust06Name(std::string name);
+	inline bool IsCust06PickupItemEnabled() const { return m_cust06PickupItemEnabled; }
+	void SetCust06PickupItemEnabled(bool enabled);
 
 	inline bool IsShowSpellInfoOnItemsEnabled() const { return m_showSpellInfoOnItems; }
 	void SetShowSpellInfoOnItemsEnabled(bool enabled);
@@ -127,7 +200,28 @@ private:
 	bool m_persistWindowBounds = default_persistWindowBounds;
 
 	bool m_lootButtonsEnabled = default_lootButtonsEnabled;
-	bool m_lucyButtonEnabled = default_lucyButtonEnabled;
+	std::string m_button01URL = default_button01URL;
+	std::string m_button01Name = default_button01Name;
+	std::string m_button02URL = default_button02URL;
+	std::string m_button02Name = default_button02Name;
+	std::string m_cust01Action = default_cust01Action;
+	std::string m_cust01Name = default_cust01Name;
+	bool m_cust01PickupItemEnabled = default_cust01PickupItemEnabled;
+	std::string m_cust02Action = default_cust02Action;
+	std::string m_cust02Name = default_cust02Name;
+	bool m_cust02PickupItemEnabled = default_cust02PickupItemEnabled;
+	std::string m_cust03Action = default_cust03Action;
+	std::string m_cust03Name = default_cust03Name;
+	bool m_cust03PickupItemEnabled = default_cust03PickupItemEnabled;
+	std::string m_cust04Action = default_cust04Action;
+	std::string m_cust04Name = default_cust04Name;
+	bool m_cust04PickupItemEnabled = default_cust04PickupItemEnabled;
+	std::string m_cust05Action = default_cust05Action;
+	std::string m_cust05Name = default_cust05Name;
+	bool m_cust05PickupItemEnabled = default_cust05PickupItemEnabled;
+	std::string m_cust06Action = default_cust06Action;
+	std::string m_cust06Name = default_cust06Name;
+	bool m_cust06PickupItemEnabled = default_cust06PickupItemEnabled;
 	bool m_showSpellInfoOnItems = default_showSpellInfoOnItems;
 	bool m_showSpellInfoOnSpells = default_showSpellInfoOnSpells;
 	std::map<ItemSpellTypes, MQColor> m_customColors;
@@ -150,7 +244,28 @@ void Settings::Load()
 	m_persistWindowBounds = GetPrivateProfileBool("Settings", "PersistWindowBounds", default_persistWindowBounds, INIFileName);
 
 	m_lootButtonsEnabled = GetPrivateProfileBool("Settings", "LootButton", default_lootButtonsEnabled, INIFileName);
-	m_lucyButtonEnabled = GetPrivateProfileBool("Settings", "LucyButton", default_lucyButtonEnabled, INIFileName);
+	m_button01URL = GetPrivateProfileString("Settings", "Button01URL", default_button01URL, INIFileName);
+	m_button01Name = GetPrivateProfileString("Settings", "Button01Name", default_button01Name, INIFileName);
+	m_button02URL = GetPrivateProfileString("Settings", "Button02URL", default_button02URL, INIFileName);
+	m_button02Name = GetPrivateProfileString("Settings", "Button02Name", default_button02Name, INIFileName);
+	m_cust01Action = GetPrivateProfileString("Settings", "Cust01Action", default_cust01Action, INIFileName);
+	m_cust01Name = GetPrivateProfileString("Settings", "Cust01Name", default_cust01Name, INIFileName);
+	m_cust01PickupItemEnabled = GetPrivateProfileBool("Settings", "Cust01PickupItemEnabled", default_cust01PickupItemEnabled, INIFileName);
+	m_cust02Action = GetPrivateProfileString("Settings", "Cust02Action", default_cust02Action, INIFileName);
+	m_cust02Name = GetPrivateProfileString("Settings", "Cust02Name", default_cust02Name, INIFileName);
+	m_cust02PickupItemEnabled = GetPrivateProfileBool("Settings", "Cust02PickupItemEnabled", default_cust02PickupItemEnabled, INIFileName);
+	m_cust03Action = GetPrivateProfileString("Settings", "Cust03Action", default_cust03Action, INIFileName);
+	m_cust03Name = GetPrivateProfileString("Settings", "Cust03Name", default_cust03Name, INIFileName);
+	m_cust03PickupItemEnabled = GetPrivateProfileBool("Settings", "Cust03PickupItemEnabled", default_cust03PickupItemEnabled, INIFileName);
+	m_cust04Action = GetPrivateProfileString("Settings", "Cust04Action", default_cust04Action, INIFileName);
+	m_cust04Name = GetPrivateProfileString("Settings", "Cust04Name", default_cust04Name, INIFileName);
+	m_cust04PickupItemEnabled = GetPrivateProfileBool("Settings", "Cust04PickupItemEnabled", default_cust04PickupItemEnabled, INIFileName);
+	m_cust05Action = GetPrivateProfileString("Settings", "Cust05Action", default_cust05Action, INIFileName);
+	m_cust05Name = GetPrivateProfileString("Settings", "Cust05Name", default_cust05Name, INIFileName);
+	m_cust05PickupItemEnabled = GetPrivateProfileBool("Settings", "Cust05PickupItemEnabled", default_cust05PickupItemEnabled, INIFileName);
+	m_cust06Action = GetPrivateProfileString("Settings", "Cust06Action", default_cust06Action, INIFileName);
+	m_cust06Name = GetPrivateProfileString("Settings", "Cust06Name", default_cust06Name, INIFileName);
+	m_cust06PickupItemEnabled = GetPrivateProfileBool("Settings", "Cust06PickupItemEnabled", default_cust06PickupItemEnabled, INIFileName);
 	m_showSpellInfoOnItems = GetPrivateProfileBool("Settings", "ShowSpellsInfoOnItems", default_showSpellInfoOnItems, INIFileName);
 	m_showSpellInfoOnSpells = GetPrivateProfileBool("Settings", "ShowSpellInfoOnSpells", default_showSpellInfoOnSpells, INIFileName);
 
@@ -180,12 +295,52 @@ void Settings::Reset()
 {
 	m_customColors.clear();
 	m_lootButtonsEnabled = default_lootButtonsEnabled;
-	m_lucyButtonEnabled = default_lucyButtonEnabled;
+	m_button01URL = default_button01URL;
+	m_button01Name = default_button01Name;
+	m_button02URL = default_button02URL;
+	m_button02Name = default_button02Name;
+	m_cust01Action = default_cust01Action;
+	m_cust01Name = default_cust01Name;
+	m_cust01PickupItemEnabled = default_cust01PickupItemEnabled;
+	m_cust02Action = default_cust02Action;
+	m_cust02Name = default_cust02Name;
+	m_cust02PickupItemEnabled = default_cust02PickupItemEnabled;
+	m_cust03Action = default_cust03Action;
+	m_cust03Name = default_cust03Name;
+	m_cust03PickupItemEnabled = default_cust03PickupItemEnabled;
+	m_cust04Action = default_cust04Action;
+	m_cust04Name = default_cust04Name;
+	m_cust04PickupItemEnabled = default_cust04PickupItemEnabled;
+	m_cust05Action = default_cust05Action;
+	m_cust05Name = default_cust05Name;
+	m_cust05PickupItemEnabled = default_cust05PickupItemEnabled;
+	m_cust06Action = default_cust06Action;
+	m_cust06Name = default_cust06Name;
+	m_cust06PickupItemEnabled = default_cust06PickupItemEnabled;
 	m_showSpellInfoOnItems = default_showSpellInfoOnItems;
 	m_showSpellInfoOnSpells = default_showSpellInfoOnSpells;
 
 	DeletePrivateProfileKey("Settings", "LootButton", INIFileName);
-	DeletePrivateProfileKey("Settings", "LucyButton", INIFileName);
+	DeletePrivateProfileKey("Settings", "Button01URL", INIFileName);
+	DeletePrivateProfileKey("Settings", "Button02URL", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust01Action", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust01Name", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust01PickupItemEnabled", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust02Action", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust02Name", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust02PickupItemEnabled", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust03Action", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust03Name", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust03PickupItemEnabled", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust04Action", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust04Name", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust04PickupItemEnabled", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust05Action", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust05Name", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust05PickupItemEnabled", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust06Action", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust06Name", INIFileName);
+	DeletePrivateProfileKey("Settings", "Cust06PickupItemEnabled", INIFileName);
 	DeletePrivateProfileKey("Settings", "ShowSpellsInfoOnItems", INIFileName);
 	DeletePrivateProfileKey("Settings", "ShowSpellInfoOnSpells", INIFileName);
 
@@ -325,14 +480,243 @@ void Settings::SetLootButtonsEnabled(bool enabled)
 	s_refreshItemDisplay = true;
 }
 
-void Settings::SetLucyButtonEnabled(bool enabled)
+void Settings::SetButton01URL(std::string url)
 {
-	if (enabled == m_lucyButtonEnabled)
+	if (url == m_button01URL)
 		return;
 
-	m_lucyButtonEnabled = enabled;
-	WritePrivateProfileBool("Settings", "LucyButton", m_lucyButtonEnabled, INIFileName);
+	m_button01URL = url;
+	WritePrivateProfileString("Settings", "Button01URL", m_button01URL, INIFileName);
 
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetButton01Name(std::string name)
+{
+	if (name == m_button01Name)
+		return;
+	if (name.empty())
+		name = default_button01Name;
+
+	m_button01Name = name;
+	WritePrivateProfileString("Settings", "Button01Name", m_button01Name, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetButton02URL(std::string url)
+{
+	if (url == m_button02URL)
+		return;
+
+	m_button02URL = url;
+	WritePrivateProfileString("Settings", "Button02URL", m_button02URL, INIFileName);
+
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetButton02Name(std::string name)
+{
+	if (name == m_button02Name)
+		return;
+	if (name.empty())
+		name = default_button02Name;
+
+	m_button02Name = name;
+	WritePrivateProfileString("Settings", "Button02Name", m_button02Name, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust01Action(std::string action)
+{
+	if (action == m_cust01Action)
+		return;
+
+	m_cust01Action = action;
+	WritePrivateProfileString("Settings", "Cust01Action", m_cust01Action, INIFileName);
+
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust01Name(std::string name)
+{
+	if (name == m_cust01Name)
+		return;
+	if (name.empty())
+		name = default_cust01Name;
+
+	m_cust01Name = name;
+	WritePrivateProfileString("Settings", "Cust01Name", m_cust01Name, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust01PickupItemEnabled(bool enabled)
+{
+	if (enabled == m_cust01PickupItemEnabled)
+		return;
+
+	m_cust01PickupItemEnabled = enabled;
+	WritePrivateProfileBool("Settings", "Cust01PickupItemEnabled", m_cust01PickupItemEnabled, INIFileName);
+
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust02Action(std::string action)
+{
+	if (action == m_cust02Action)
+		return;
+
+	m_cust02Action = action;
+	WritePrivateProfileString("Settings", "Cust02Action", m_cust02Action, INIFileName);
+
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust02Name(std::string name)
+{
+	if (name == m_cust02Name)
+		return;
+	if (name.empty())
+		name = default_cust02Name;
+
+	m_cust02Name = name;
+	WritePrivateProfileString("Settings", "Cust02Name", m_cust02Name, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust02PickupItemEnabled(bool enabled)
+{
+	if (enabled == m_cust02PickupItemEnabled)
+		return;
+	m_cust02PickupItemEnabled = enabled;
+	WritePrivateProfileBool("Settings", "Cust02PickupItemEnabled", m_cust02PickupItemEnabled, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust03Action(std::string action)
+{
+	if (action == m_cust03Action)
+		return;
+
+	m_cust03Action = action;
+	WritePrivateProfileString("Settings", "Cust03Action", m_cust03Action, INIFileName);
+
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust03Name(std::string name)
+{
+	if (name == m_cust03Name)
+		return;
+	if (name.empty())
+		name = default_cust03Name;
+
+	m_cust03Name = name;
+	WritePrivateProfileString("Settings", "Cust03Name", m_cust03Name, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust03PickupItemEnabled(bool enabled)
+{
+	if (enabled == m_cust03PickupItemEnabled)
+		return;
+	m_cust03PickupItemEnabled = enabled;
+	WritePrivateProfileBool("Settings", "Cust03PickupItemEnabled", m_cust03PickupItemEnabled, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust04Action(std::string action)
+{
+	if (action == m_cust04Action)
+		return;
+
+	m_cust04Action = action;
+	WritePrivateProfileString("Settings", "Cust04Action", m_cust04Action, INIFileName);
+
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust04Name(std::string name)
+{
+	if (name == m_cust04Name)
+		return;
+	if (name.empty())
+		name = default_cust04Name;
+
+	m_cust04Name = name;
+	WritePrivateProfileString("Settings", "Cust04Name", m_cust04Name, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust04PickupItemEnabled(bool enabled)
+{
+	if (enabled == m_cust04PickupItemEnabled)
+		return;
+	m_cust04PickupItemEnabled = enabled;
+	WritePrivateProfileBool("Settings", "Cust04PickupItemEnabled", m_cust04PickupItemEnabled, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust05Action(std::string action)
+{
+	if (action == m_cust05Action)
+		return;
+
+	m_cust05Action = action;
+	WritePrivateProfileString("Settings", "Cust05Action", m_cust05Action, INIFileName);
+
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust05Name(std::string name)
+{
+	if (name == m_cust05Name)
+		return;
+	if (name.empty())
+		name = default_cust05Name;
+
+	m_cust05Name = name;
+	WritePrivateProfileString("Settings", "Cust05Name", m_cust05Name, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust05PickupItemEnabled(bool enabled)
+{
+	if (enabled == m_cust05PickupItemEnabled)
+		return;
+	m_cust05PickupItemEnabled = enabled;
+	WritePrivateProfileBool("Settings", "Cust05PickupItemEnabled", m_cust05PickupItemEnabled, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust06Action(std::string action)
+{
+	if (action == m_cust06Action)
+		return;
+
+	m_cust06Action = action;
+	WritePrivateProfileString("Settings", "Cust06Action", m_cust06Action, INIFileName);
+
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust06Name(std::string name)
+{
+	if (name == m_cust06Name)
+		return;
+	if (name.empty())
+		name = default_cust06Name;
+
+	m_cust06Name = name;
+	WritePrivateProfileString("Settings", "Cust06Name", m_cust06Name, INIFileName);
+	s_refreshItemDisplay = true;
+}
+
+void Settings::SetCust06PickupItemEnabled(bool enabled)
+{
+	if (enabled == m_cust06PickupItemEnabled)
+		return;
+	m_cust06PickupItemEnabled = enabled;
+	WritePrivateProfileBool("Settings", "Cust06PickupItemEnabled", m_cust06PickupItemEnabled, INIFileName);
 	s_refreshItemDisplay = true;
 }
 
@@ -400,7 +784,14 @@ struct ItemDisplayExtraInfo
 	bool scribedReceived = false;
 
 	// Our extra buttons
-	std::unique_ptr<CButtonWnd> pLucyButton = nullptr;
+	std::unique_ptr<CButtonWnd> pURL01Button = nullptr;
+	std::unique_ptr<CButtonWnd> pURL02Button = nullptr;
+	std::unique_ptr<CButtonWnd> pCust01Button = nullptr;
+	std::unique_ptr<CButtonWnd> pCust02Button = nullptr;
+	std::unique_ptr<CButtonWnd> pCust03Button = nullptr;
+	std::unique_ptr<CButtonWnd> pCust04Button = nullptr;
+	std::unique_ptr<CButtonWnd> pCust05Button = nullptr;
+	std::unique_ptr<CButtonWnd> pCust06Button = nullptr;
 	std::unique_ptr<CLabelWnd> pHeader = nullptr;         // Loot buttons header
 	std::unique_ptr<CButtonWnd> pAlwaysNeedBtn = nullptr;
 	std::unique_ptr<CButtonWnd> pAlwaysGreedBtn = nullptr;
@@ -422,6 +813,7 @@ struct ItemDisplayExtraInfo
 	void ResetItem();
 
 	void SetLootButtonsPosition(const CXPoint& labelPos);
+	void SetCustomButtonsPosition(const CXPoint& labelPos);
 };
 
 void ItemDisplayExtraInfo::ResetItem()
@@ -445,7 +837,14 @@ void ItemDisplayExtraInfo::Reset()
 {
 	ResetItem();
 
-	pLucyButton.reset();
+	pURL01Button.reset();
+	pURL02Button.reset();
+	pCust01Button.reset();
+	pCust02Button.reset();
+	pCust03Button.reset();
+	pCust04Button.reset();
+	pCust05Button.reset();
+	pCust06Button.reset();
 	ResetLootButtons();
 }
 
@@ -487,27 +886,139 @@ void ItemDisplayExtraInfo::SetLootButtonsPosition(const CXPoint& labelPos)
 		pAutoRollBtn->SetLocation(buttonRect);
 	}
 
-	if (pLucyButton)
+	if (pURL01Button)
 	{
-		const CXSize lucyButtonSize(36, 20);
+		const CXSize URL01ButtonSize(36, 20);
 
 		CXRect buttonRect = headerRect;
 		buttonRect.SetTop(buttonRect.top + 10);
 
 		if (!pHeader)
 		{
-			buttonRect.SetSize(lucyButtonSize);
+			buttonRect.SetSize(URL01ButtonSize);
 
-			pLucyButton->SetLocation(buttonRect);
+			pURL01Button->SetLocation(buttonRect);
 		}
 		else
 		{
 			// offset to the right
 			buttonRect.SetLeft(buttonRect.left + buttonRect.GetWidth() + 6);
-			buttonRect.SetSize(lucyButtonSize);
+			buttonRect.SetSize(URL01ButtonSize);
 
-			pLucyButton->SetLocation(buttonRect);
+			pURL01Button->SetLocation(buttonRect);
 		}
+	}
+
+	if (pURL02Button)
+	{
+		const CXSize URL02ButtonSize(36, 20);
+
+		CXRect buttonRect = headerRect;
+		if (pURL01Button)
+		{
+			buttonRect.SetTop(buttonRect.top - BUTTON_SPACING + 10);
+		}
+		else
+		{
+			buttonRect.SetTop(buttonRect.top + 10);
+		}
+
+		if (!pHeader)
+		{
+			buttonRect.SetSize(URL02ButtonSize);
+
+			pURL02Button->SetLocation(buttonRect);
+		}
+		else
+		{
+			// offset to the right
+			buttonRect.SetLeft(buttonRect.left + buttonRect.GetWidth() + 6);
+			buttonRect.SetSize(URL02ButtonSize);
+
+			pURL02Button->SetLocation(buttonRect);
+		}
+	}
+}
+void ItemDisplayExtraInfo::SetCustomButtonsPosition(const CXPoint& labelPos)
+{
+	CXRect headerRect{ labelPos, CXSize(80, 12) };
+	if (pCust01Button && !s_settings.Cust01ButtonAction().empty())
+	{
+		const CXSize custButtonSize(44, 15);
+
+		CXRect buttonRect = headerRect;
+		buttonRect.SetTop(buttonRect.top - 8);
+
+		// offset to the right
+		buttonRect.SetLeft(buttonRect.left + buttonRect.GetWidth() - 20);
+		buttonRect.SetSize(custButtonSize);
+
+		pCust01Button->SetLocation(buttonRect);
+	}
+	if (pCust02Button)
+	{
+		const CXSize custButtonSize(44, 15);
+
+		CXRect buttonRect = headerRect;
+		buttonRect.SetTop(buttonRect.top - 8);
+
+		// offset to the right
+		buttonRect.SetLeft(buttonRect.left + buttonRect.GetWidth() + 24);
+		buttonRect.SetSize(custButtonSize);
+
+		pCust02Button->SetLocation(buttonRect);
+	}
+	if (pCust03Button)
+	{
+		const CXSize custButtonSize(44, 15);
+
+		CXRect buttonRect = headerRect;
+		buttonRect.SetTop(buttonRect.top - 8);
+
+		// offset to the right
+		buttonRect.SetLeft(buttonRect.left + buttonRect.GetWidth() + 68);
+		buttonRect.SetSize(custButtonSize);
+
+		pCust03Button->SetLocation(buttonRect);
+	}
+	if (pCust04Button)
+	{
+		const CXSize custButtonSize(44, 15);
+
+		CXRect buttonRect = headerRect;
+		buttonRect.SetTop(buttonRect.top + 7);
+
+		// offset to the right
+		buttonRect.SetLeft(buttonRect.left + buttonRect.GetWidth() - 20);
+		buttonRect.SetSize(custButtonSize);
+
+		pCust04Button->SetLocation(buttonRect);
+	}
+	if (pCust05Button)
+	{
+		const CXSize custButtonSize(44, 15);
+
+		CXRect buttonRect = headerRect;
+		buttonRect.SetTop(buttonRect.top + 7);
+
+		// offset to the right
+		buttonRect.SetLeft(buttonRect.left + buttonRect.GetWidth() + 24);
+		buttonRect.SetSize(custButtonSize);
+
+		pCust05Button->SetLocation(buttonRect);
+	}
+	if (pCust06Button)
+	{
+		const CXSize custButtonSize(44, 15);
+
+		CXRect buttonRect = headerRect;
+		buttonRect.SetTop(buttonRect.top + 7);
+
+		// offset to the right
+		buttonRect.SetLeft(buttonRect.left + buttonRect.GetWidth() + 68);
+		buttonRect.SetSize(custButtonSize);
+
+		pCust06Button->SetLocation(buttonRect);
 	}
 }
 
@@ -778,7 +1289,7 @@ public:
 
 				return false;
 			}
-			
+
 			// Search by string.
 			CItemDisplayWnd* pWnd = FindItemWndByString(szIndex);
 			Ret.DWord = pWnd ? pWnd->ItemWndIndex : -1;
@@ -1305,12 +1816,109 @@ static void CreateItemText(fmt::memory_buffer& buffer_, const ItemPtr& item, con
 
 //============================================================================
 
-void HandleLucyButton(const ItemPtr& pItem)
+static std::string ReplaceCustomButtonVariables(const ItemPtr& pItem, std::string text)
+{
+	std::regex name("%name%");
+	std::regex id("%id%");
+	std::regex count("%count%");
+	text = std::regex_replace(text, name, pItem->GetName());
+	text = std::regex_replace(text, id, std::to_string(pItem->GetID()));
+	text = std::regex_replace(text, count, std::to_string(FindInventoryItemCountByName(pItem->GetName())));
+	return text;
+}
+
+static void HandleURL01Button(const ItemPtr& pItem)
 {
 	if (pItem)
 	{
-		std::string url = fmt::format("https://lucy.allakhazam.com/item.html?id={}", pItem->GetID());
-		ShellExecute(nullptr, "open", url.c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+		ShellExecute(nullptr, "open", ReplaceCustomButtonVariables(pItem, s_settings.Button01URL()).c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+	}
+}
+
+static void HandleURL02Button(const ItemPtr& pItem)
+{
+	if (pItem)
+	{
+		ShellExecute(nullptr, "open", ReplaceCustomButtonVariables(pItem, s_settings.Button02URL()).c_str(), nullptr, nullptr, SW_SHOWNORMAL);
+	}
+}
+
+static void HandleCust01Button(const ItemPtr& pItem)
+{
+	if (pItem)
+	{
+		if (s_settings.IsCust01PickupItemEnabled())
+		{
+			std::string pickupItem = fmt::format("/itemnotify \"{}\" leftmouseup", pItem->GetName());
+			EzCommand(pickupItem.c_str());
+		}
+		EzCommand(ReplaceCustomButtonVariables(pItem, s_settings.Cust01ButtonAction()).c_str());
+	}
+}
+
+static void HandleCust02Button(const ItemPtr& pItem)
+{
+	if (pItem)
+	{
+		if (s_settings.IsCust02PickupItemEnabled())
+		{
+			std::string pickupItem = fmt::format("/itemnotify \"{}\" leftmouseup", pItem->GetName());
+			EzCommand(pickupItem.c_str());
+		}
+		EzCommand(ReplaceCustomButtonVariables(pItem, s_settings.Cust02ButtonAction()).c_str());
+	}
+}
+
+static void HandleCust03Button(const ItemPtr& pItem)
+{
+	if (pItem)
+	{
+		if (s_settings.IsCust03PickupItemEnabled())
+		{
+			std::string pickupItem = fmt::format("/itemnotify \"{}\" leftmouseup", pItem->GetName());
+			EzCommand(pickupItem.c_str());
+		}
+		EzCommand(ReplaceCustomButtonVariables(pItem, s_settings.Cust03ButtonAction()).c_str());
+	}
+}
+
+static void HandleCust04Button(const ItemPtr& pItem)
+{
+	if (pItem)
+	{
+		if (s_settings.IsCust04PickupItemEnabled())
+		{
+			std::string pickupItem = fmt::format("/itemnotify \"{}\" leftmouseup", pItem->GetName());
+			EzCommand(pickupItem.c_str());
+		}
+		EzCommand(ReplaceCustomButtonVariables(pItem, s_settings.Cust04ButtonAction()).c_str());
+	}
+}
+
+static void HandleCust05Button(const ItemPtr& pItem)
+{
+	if (pItem)
+	{
+		if (s_settings.IsCust05PickupItemEnabled())
+		{
+			std::string pickupItem = fmt::format("/itemnotify \"{}\" leftmouseup", pItem->GetName());
+			EzCommand(pickupItem.c_str());
+		}
+
+		EzCommand(ReplaceCustomButtonVariables(pItem, s_settings.Cust05ButtonAction()).c_str());
+	}
+}
+
+static void HandleCust06Button(const ItemPtr& pItem)
+{
+	if (pItem)
+	{
+		if (s_settings.IsCust06PickupItemEnabled())
+		{
+			std::string pickupItem = fmt::format("/itemnotify \"{}\" leftmouseup", pItem->GetName());
+			EzCommand(pickupItem.c_str());
+		}
+		EzCommand(ReplaceCustomButtonVariables(pItem, s_settings.Cust06ButtonAction()).c_str());
 	}
 }
 
@@ -1336,9 +1944,51 @@ public:
 		{
 			ItemDisplayExtraInfo& extraInfo = s_itemDisplayExtraInfo[this];
 
-			if (extraInfo.pLucyButton.get() == sender)
+			if (extraInfo.pURL01Button.get() == sender)
 			{
-				HandleLucyButton(pItem);
+				HandleURL01Button(pItem);
+				return 0;
+			}
+
+			if (extraInfo.pURL02Button.get() == sender)
+			{
+				HandleURL02Button(pItem);
+				return 0;
+			}
+
+			if (extraInfo.pCust01Button.get() == sender)
+			{
+				HandleCust01Button(pItem);
+				return 0;
+			}
+
+			if (extraInfo.pCust02Button.get() == sender)
+			{
+				HandleCust02Button(pItem);
+				return 0;
+			}
+
+			if (extraInfo.pCust03Button.get() == sender)
+			{
+				HandleCust03Button(pItem);
+				return 0;
+			}
+
+			if (extraInfo.pCust04Button.get() == sender)
+			{
+				HandleCust04Button(pItem);
+				return 0;
+			}
+
+			if (extraInfo.pCust05Button.get() == sender)
+			{
+				HandleCust05Button(pItem);
+				return 0;
+			}
+
+			if (extraInfo.pCust06Button.get() == sender)
+			{
+				HandleCust06Button(pItem);
 				return 0;
 			}
 
@@ -1422,9 +2072,9 @@ public:
 	{
 		ItemDisplayExtraInfo& extraInfo = s_itemDisplayExtraInfo[this];
 
-		if (!extraInfo.pLucyButton && s_settings.IsLucyButtonEnabled())
+		if (!s_settings.Button01URL().empty())
 		{
-			// create lucy button
+			// create URL01 button
 			if (CControlTemplate* btnTemplate = (CControlTemplate*)pSidlMgr->FindScreenPieceTemplate("IDW_ModButton"))
 			{
 				uint32_t oldfont = std::exchange(btnTemplate->nFont, 1);
@@ -1435,16 +2085,176 @@ public:
 
 				CButtonWnd* pBtn = (CButtonWnd*)pSidlMgr->CreateXWndFromTemplate(pAnchor, btnTemplate);
 				pBtn->SetCRNormal(MQColor(255, 255, 0));
-				pBtn->SetWindowText("Lucy");
+				pBtn->SetWindowText(s_settings.Button01Name().c_str());
 				pBtn->SetDecalTint(MQColor(0, 255, 255));
-				extraInfo.pLucyButton.reset(pBtn);
+				extraInfo.pURL01Button.reset(pBtn);
 
 				btnTemplate->nFont = oldfont;
 			}
 		}
-		else if (extraInfo.pLucyButton && !s_settings.IsLucyButtonEnabled())
+		else if (s_settings.Button01URL().empty())
 		{
-			extraInfo.pLucyButton.reset();
+			extraInfo.pURL01Button.reset();
+		}
+
+		if (!s_settings.Button02URL().empty())
+		{
+			// create URL02 button
+			if (CControlTemplate* btnTemplate = (CControlTemplate*)pSidlMgr->FindScreenPieceTemplate("IDW_ModButton"))
+			{
+				uint32_t oldfont = std::exchange(btnTemplate->nFont, 1);
+
+				CXWnd* pAnchor = this;
+				if (CXWnd* pDescriptionTab = GetChildItem("ItemDescriptionTab"))
+					pAnchor = pDescriptionTab;
+
+				CButtonWnd* pBtn = (CButtonWnd*)pSidlMgr->CreateXWndFromTemplate(pAnchor, btnTemplate);
+				pBtn->SetCRNormal(MQColor(255, 255, 0));
+				pBtn->SetWindowText(s_settings.Button02Name().c_str());
+				pBtn->SetDecalTint(MQColor(0, 255, 255));
+				extraInfo.pURL02Button.reset(pBtn);
+
+				btnTemplate->nFont = oldfont;
+			}
+		}
+		else if (s_settings.Button02URL().empty())
+		{
+			extraInfo.pURL02Button.reset();
+		}
+
+		if (!s_settings.Cust01ButtonAction().empty() && (!s_settings.IsCust01PickupItemEnabled() || (s_settings.IsCust01PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0)))
+		{
+			// create Custom button
+			if (CControlTemplate* btnTemplate = (CControlTemplate*)pSidlMgr->FindScreenPieceTemplate("IDW_ModButton"))
+			{
+				uint32_t oldfont = std::exchange(btnTemplate->nFont, 1);
+
+				CXWnd* pAnchor = this;
+				if (CXWnd* pDescriptionTab = GetChildItem("ItemDescriptionTab"))
+					pAnchor = pDescriptionTab;
+
+				CButtonWnd* pBtn = (CButtonWnd*)pSidlMgr->CreateXWndFromTemplate(pAnchor, btnTemplate);
+				pBtn->SetCRNormal(MQColor(255, 255, 0));
+				pBtn->SetWindowText(s_settings.Cust01ButtonName().c_str());
+				pBtn->SetDecalTint(MQColor(0, 255, 255));
+				extraInfo.pCust01Button.reset(pBtn);
+
+				btnTemplate->nFont = oldfont;
+			}
+		}
+		else if (extraInfo.pCust01Button && (s_settings.Cust01ButtonAction().empty() || (s_settings.IsCust01PickupItemEnabled() || !(s_settings.IsCust01PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0))))
+		{
+			extraInfo.pCust01Button.reset();
+		}
+
+		if (!s_settings.Cust02ButtonAction().empty() && (!s_settings.IsCust02PickupItemEnabled() || (s_settings.IsCust02PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0)))
+		{
+			// create Custom button
+			if (CControlTemplate* btnTemplate = (CControlTemplate*)pSidlMgr->FindScreenPieceTemplate("IDW_ModButton"))
+			{
+				uint32_t oldfont = std::exchange(btnTemplate->nFont, 1);
+				CXWnd* pAnchor = this;
+				if (CXWnd* pDescriptionTab = GetChildItem("ItemDescriptionTab"))
+					pAnchor = pDescriptionTab;
+				CButtonWnd* pBtn = (CButtonWnd*)pSidlMgr->CreateXWndFromTemplate(pAnchor, btnTemplate);
+				pBtn->SetCRNormal(MQColor(255, 255, 0));
+				pBtn->SetWindowText(s_settings.Cust02ButtonName().c_str());
+				pBtn->SetDecalTint(MQColor(0, 255, 255));
+				extraInfo.pCust02Button.reset(pBtn);
+				btnTemplate->nFont = oldfont;
+			}
+		}
+		else if (extraInfo.pCust02Button && (s_settings.Cust02ButtonAction().empty() || (s_settings.IsCust02PickupItemEnabled() || !(s_settings.IsCust02PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0))))
+		{
+			extraInfo.pCust02Button.reset();
+		}
+
+		if (!s_settings.Cust03ButtonAction().empty() && (!s_settings.IsCust03PickupItemEnabled() || (s_settings.IsCust03PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0)))
+		{
+			// create Custom button
+			if (CControlTemplate* btnTemplate = (CControlTemplate*)pSidlMgr->FindScreenPieceTemplate("IDW_ModButton"))
+			{
+				uint32_t oldfont = std::exchange(btnTemplate->nFont, 1);
+				CXWnd* pAnchor = this;
+				if (CXWnd* pDescriptionTab = GetChildItem("ItemDescriptionTab"))
+					pAnchor = pDescriptionTab;
+				CButtonWnd* pBtn = (CButtonWnd*)pSidlMgr->CreateXWndFromTemplate(pAnchor, btnTemplate);
+				pBtn->SetCRNormal(MQColor(255, 255, 0));
+				pBtn->SetWindowText(s_settings.Cust03ButtonName().c_str());
+				pBtn->SetDecalTint(MQColor(0, 255, 255));
+				extraInfo.pCust03Button.reset(pBtn);
+				btnTemplate->nFont = oldfont;
+			}
+		}
+		else if (extraInfo.pCust03Button && (s_settings.Cust03ButtonAction().empty() || (s_settings.IsCust03PickupItemEnabled() || !(s_settings.IsCust03PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0))))
+		{
+			extraInfo.pCust03Button.reset();
+		}
+
+		if (!s_settings.Cust04ButtonAction().empty() && (!s_settings.IsCust04PickupItemEnabled() || (s_settings.IsCust04PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0)))
+		{
+			// create Custom button
+			if (CControlTemplate* btnTemplate = (CControlTemplate*)pSidlMgr->FindScreenPieceTemplate("IDW_ModButton"))
+			{
+				uint32_t oldfont = std::exchange(btnTemplate->nFont, 1);
+				CXWnd* pAnchor = this;
+				if (CXWnd* pDescriptionTab = GetChildItem("ItemDescriptionTab"))
+					pAnchor = pDescriptionTab;
+				CButtonWnd* pBtn = (CButtonWnd*)pSidlMgr->CreateXWndFromTemplate(pAnchor, btnTemplate);
+				pBtn->SetCRNormal(MQColor(255, 255, 0));
+				pBtn->SetWindowText(s_settings.Cust04ButtonName().c_str());
+				pBtn->SetDecalTint(MQColor(0, 255, 255));
+				extraInfo.pCust04Button.reset(pBtn);
+				btnTemplate->nFont = oldfont;
+			}
+		}
+		else if (extraInfo.pCust04Button && (s_settings.Cust04ButtonAction().empty() || (s_settings.IsCust04PickupItemEnabled() || !(s_settings.IsCust04PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0))))
+		{
+			extraInfo.pCust04Button.reset();
+		}
+
+		if (!s_settings.Cust05ButtonAction().empty() && (!s_settings.IsCust05PickupItemEnabled() || (s_settings.IsCust05PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0)))
+		{
+			// create Custom button
+			if (CControlTemplate* btnTemplate = (CControlTemplate*)pSidlMgr->FindScreenPieceTemplate("IDW_ModButton"))
+			{
+				uint32_t oldfont = std::exchange(btnTemplate->nFont, 1);
+				CXWnd* pAnchor = this;
+				if (CXWnd* pDescriptionTab = GetChildItem("ItemDescriptionTab"))
+					pAnchor = pDescriptionTab;
+				CButtonWnd* pBtn = (CButtonWnd*)pSidlMgr->CreateXWndFromTemplate(pAnchor, btnTemplate);
+				pBtn->SetCRNormal(MQColor(255, 255, 0));
+				pBtn->SetWindowText(s_settings.Cust05ButtonName().c_str());
+				pBtn->SetDecalTint(MQColor(0, 255, 255));
+				extraInfo.pCust05Button.reset(pBtn);
+				btnTemplate->nFont = oldfont;
+			}
+		}
+		else if (extraInfo.pCust05Button && (s_settings.Cust05ButtonAction().empty() || (s_settings.IsCust05PickupItemEnabled() || !(s_settings.IsCust05PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0))))
+		{
+			extraInfo.pCust05Button.reset();
+		}
+
+		if (!s_settings.Cust06ButtonAction().empty() && (!s_settings.IsCust06PickupItemEnabled() || (s_settings.IsCust06PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0)))
+		{
+			// create Custom button
+			if (CControlTemplate* btnTemplate = (CControlTemplate*)pSidlMgr->FindScreenPieceTemplate("IDW_ModButton"))
+			{
+				uint32_t oldfont = std::exchange(btnTemplate->nFont, 1);
+				CXWnd* pAnchor = this;
+				if (CXWnd* pDescriptionTab = GetChildItem("ItemDescriptionTab"))
+					pAnchor = pDescriptionTab;
+				CButtonWnd* pBtn = (CButtonWnd*)pSidlMgr->CreateXWndFromTemplate(pAnchor, btnTemplate);
+				pBtn->SetCRNormal(MQColor(255, 255, 0));
+				pBtn->SetWindowText(s_settings.Cust06ButtonName().c_str());
+				pBtn->SetDecalTint(MQColor(0, 255, 255));
+				extraInfo.pCust06Button.reset(pBtn);
+				btnTemplate->nFont = oldfont;
+			}
+		}
+		else if (extraInfo.pCust06Button && (s_settings.Cust06ButtonAction().empty() || (s_settings.IsCust06PickupItemEnabled() || !(s_settings.IsCust06PickupItemEnabled() && FindInventoryItemCountByName(pItem->GetName()) > 0))))
+		{
+			extraInfo.pCust06Button.reset();
 		}
 
 #if HAS_ADVANCED_LOOT
@@ -1498,7 +2308,7 @@ public:
 		}
 #endif // HAS_ADVANCED_LOOT
 
-		if (extraInfo.pHeader || extraInfo.pLucyButton)
+		if (extraInfo.pHeader || extraInfo.pURL01Button || extraInfo.pURL02Button)
 		{
 			//------------------------------------------------------------------------
 			// Update position of labels
@@ -1531,6 +2341,21 @@ public:
 						extraInfo.SetLootButtonsPosition(pos);
 					}
 				}
+			}
+		}
+		if (extraInfo.pCust01Button || extraInfo.pCust02Button || extraInfo.pCust03Button || extraInfo.pCust04Button || extraInfo.pCust05Button || extraInfo.pCust06Button)
+		{
+			//------------------------------------------------------------------------
+			// Update position of labels
+
+			// Define the position of everything in terms of the upper left corner of
+			// the header label.
+
+			// Try to show it in the 2nd column, if it isn't taken.
+			CXWnd* tempWnd = GetChildItem("IDW_ModButtonLabel");
+			if (tempWnd)
+			{
+				extraInfo.SetCustomButtonsPosition(tempWnd->GetLocation().TopLeft());
 			}
 		}
 
@@ -1812,16 +2637,21 @@ void ItemDisplayCmd(SPAWNINFO* pChar, char* szLine)
 	{
 		WriteChatf("Usage:");
 		WriteChatf("    /itemdisplay LootButton [on|off]");
-		WriteChatf("    /itemdisplay LucyButton [on|off]");
+		WriteChatf("    /itemdisplay URL01Button \"URL\" \"ButtonName\"");
+		WriteChatf("    /itemdisplay URL02Button \"URL\" \"ButtonName\"");
+		WriteChatf("    /itemdisplay Custom[01-06] \"Action\" \"ButtonName\" [PickupItem on|off]");
+		WriteChatf("        Action variables: %%name%% %%id%% %%count%%");
 		WriteChatf("    /itemdisplay reload");
 		return;
 	}
 
 	char szArg1[MAX_STRING] = { 0 };
 	char szArg2[MAX_STRING] = { 0 };
+	char szArg3[MAX_STRING] = { 0 };
+	char szArg4[MAX_STRING] = { 0 };
 	GetArg(szArg1, szLine, 1);
 
-	if (ci_equals(szArg1, "lootbutton") || ci_equals(szArg1, "lucybutton"))
+	if (ci_equals(szArg1, "lootbutton"))
 	{
 		GetArg(szArg2, szLine, 2);
 		bool bOn = true;
@@ -1845,10 +2675,94 @@ void ItemDisplayCmd(SPAWNINFO* pChar, char* szLine)
 			s_settings.SetLootButtonsEnabled(bToggle ? !s_settings.IsLootButtonsEnabled() : bOn);
 			WriteChatf("Display of the loot filter buttons is now %s.", (s_settings.IsLootButtonsEnabled() ? "\agEnabled\ax" : "\arDisabled\ax"));
 		}
-		else if (ci_equals(szArg1, "lucybutton"))
+	}
+	else if (ci_equals(szArg1, "url01button") || ci_equals(szArg1, "url02button") || ci_equals(szArg1, "custom01") || ci_equals(szArg1, "custom02") || ci_equals(szArg1, "custom03") || ci_equals(szArg1, "custom04") || ci_equals(szArg1, "custom05") || ci_equals(szArg1, "custom06"))
+	{
+		GetArg(szArg2, szLine, 2);
+		GetArg(szArg3, szLine, 3);
+		GetArg(szArg4, szLine, 4);
+		bool bOn = false;
+		bool bToggle = false;
+
+		if (szArg4 && szArg4[0] != '\0')
 		{
-			s_settings.SetLucyButtonEnabled(bToggle ? !s_settings.IsLucyButtonEnabled() : bOn);
-			WriteChatf("Display of the lucy button is now \ay%s\ax.", (s_settings.IsLucyButtonEnabled() ? "\agEnabled\ax" : "\agDisabled\ax"));
+			if (ci_equals(szArg4, "off"))
+			{
+				bToggle = true;
+				bOn = false;
+			}
+			else if (ci_equals(szArg4, "on"))
+			{
+				bToggle = true;
+				bOn = true;
+			}
+		}
+
+		if (ci_equals(szArg1, "url01button"))
+		{
+			s_settings.SetButton01URL(szArg2);
+			s_settings.SetButton01Name(szArg3);
+			WriteChatf("URL button \"\ay%s\ax\" is now: \ay%s\ax", s_settings.Button01Name().c_str(), s_settings.Button01URL().c_str());
+		}
+		else if (ci_equals(szArg1, "url02button"))
+		{
+			s_settings.SetButton02URL(szArg2);
+			s_settings.SetButton02Name(szArg3);
+			WriteChatf("URL button \"\ay%s\ax\" is now: \ay%s\ax", s_settings.Button02Name().c_str(), s_settings.Button02URL().c_str());
+		}
+		else if (ci_equals(szArg1, "custom01"))
+		{
+			s_settings.SetCust01Action(szArg2);
+			s_settings.SetCust01Name(szArg3);
+			s_settings.SetCust01PickupItemEnabled(bToggle ? !s_settings.IsCust01PickupItemEnabled() : bOn);
+			WriteChatf("Custom button 01 \"\ay%s\ax\" action is now: \ay%s\ax", s_settings.Cust01ButtonName().c_str(), s_settings.Cust01ButtonAction().c_str());
+			if (bToggle)
+				WriteChatf("Custom button 01 Pickup Item is now: \ay%s\ax", (s_settings.IsCust01PickupItemEnabled() ? "\agEnabled\ax" : "\arDisabled\ax"));
+		}
+		else if (ci_equals(szArg1, "custom02"))
+		{
+			s_settings.SetCust02Action(szArg2);
+			s_settings.SetCust02Name(szArg3);
+			s_settings.SetCust02PickupItemEnabled(bToggle ? !s_settings.IsCust02PickupItemEnabled() : bOn);
+			WriteChatf("Custom button 02 \"\ay%s\ax\" action is now: \ay%s\ax", s_settings.Cust02ButtonName().c_str(), s_settings.Cust02ButtonAction().c_str());
+			if (bToggle)
+				WriteChatf("Custom button 02 Pickup Item is now: \ay%s\ax", (s_settings.IsCust02PickupItemEnabled() ? "\agEnabled\ax" : "\arDisabled\ax"));
+		}
+		else if (ci_equals(szArg1, "custom03"))
+		{
+			s_settings.SetCust03Action(szArg2);
+			s_settings.SetCust03Name(szArg3);
+			s_settings.SetCust03PickupItemEnabled(bToggle ? !s_settings.IsCust03PickupItemEnabled() : bOn);
+			WriteChatf("Custom button 03 \"\ay%s\ax\" action is now: \ay%s\ax", s_settings.Cust03ButtonName().c_str(), s_settings.Cust03ButtonAction().c_str());
+			if (bToggle)
+				WriteChatf("Custom button 03 Pickup Item is now: \ay%s\ax", (s_settings.IsCust03PickupItemEnabled() ? "\agEnabled\ax" : "\arDisabled\ax"));
+		}
+		else if (ci_equals(szArg1, "custom04"))
+		{
+			s_settings.SetCust04Action(szArg2);
+			s_settings.SetCust04Name(szArg3);
+			s_settings.SetCust04PickupItemEnabled(bToggle ? !s_settings.IsCust04PickupItemEnabled() : bOn);
+			WriteChatf("Custom button 04 \"\ay%s\ax\" action is now: \ay%s\ax", s_settings.Cust04ButtonName().c_str(), s_settings.Cust04ButtonAction().c_str());
+			if (bToggle)
+				WriteChatf("Custom button 04 Pickup Item is now: \ay%s\ax", (s_settings.IsCust04PickupItemEnabled() ? "\agEnabled\ax" : "\arDisabled\ax"));
+		}
+		else if (ci_equals(szArg1, "custom05"))
+		{
+			s_settings.SetCust05Action(szArg2);
+			s_settings.SetCust05Name(szArg3);
+			s_settings.SetCust05PickupItemEnabled(bToggle ? !s_settings.IsCust05PickupItemEnabled() : bOn);
+			WriteChatf("Custom button 05 \"\ay%s\ax\" action is now: \ay%s\ax", s_settings.Cust05ButtonName().c_str(), s_settings.Cust05ButtonAction().c_str());
+			if (bToggle)
+				WriteChatf("Custom button 05 Pickup Item is now: \ay%s\ax", (s_settings.IsCust05PickupItemEnabled() ? "\agEnabled\ax" : "\arDisabled\ax"));
+		}
+		else if (ci_equals(szArg1, "custom06"))
+		{
+			s_settings.SetCust06Action(szArg2);
+			s_settings.SetCust06Name(szArg3);
+			s_settings.SetCust06PickupItemEnabled(bToggle ? !s_settings.IsCust06PickupItemEnabled() : bOn);
+			WriteChatf("Custom button 06 \"\ay%s\ax\" action is now: \ay%s\ax", s_settings.Cust06ButtonName().c_str(), s_settings.Cust06ButtonAction().c_str());
+			if (bToggle)
+				WriteChatf("Custom button 06 Pickup Item is now: \ay%s\ax", (s_settings.IsCust06PickupItemEnabled() ? "\agEnabled\ax" : "\arDisabled\ax"));
 		}
 	}
 	else if (ci_equals(szArg1, "reload"))
@@ -1912,12 +2826,6 @@ void DrawItemDisplaySettingsPanel()
 		s_settings.SetLootButtonsEnabled(showLootButtons);
 	}
 
-	bool showLucyButton = s_settings.IsLucyButtonEnabled();
-	if (ImGui::Checkbox("Show Lucy Button", &showLucyButton))
-	{
-		s_settings.SetLucyButtonEnabled(showLucyButton);
-	}
-
 	bool showItemSpells = s_settings.IsShowSpellInfoOnItemsEnabled();
 	if (ImGui::Checkbox("Show Spell Info on Items", &showItemSpells))
 	{
@@ -1930,6 +2838,179 @@ void DrawItemDisplaySettingsPanel()
 		s_settings.SetShowSpellInfoOnSpellsEnabled(showSpells);
 	}
 
+	ImGui::NewLine();
+	ImGui::Text("URL Buttons");
+	ImGui::Separator();
+	ImGui::Text("1. Name");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(80.f);
+	static std::string URLButton01Name = s_settings.Button01Name();
+	if (ImGui::InputTextWithHint("URL##URL01Name", "Lucy", &URLButton01Name))
+	{
+		s_settings.SetButton01Name(URLButton01Name);
+	}
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(-120.f);
+	static std::string URL01Button = s_settings.Button01URL();
+	if (ImGui::InputTextWithHint("##URL01", "https://lucy.allakhazam.com/item.html?id=%id%", &URL01Button))
+	{
+		s_settings.SetButton01URL(URL01Button);
+	}
+
+	ImGui::Text("2. Name");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(80.f);
+	static std::string URLButton02Name = s_settings.Button02Name();
+	if (ImGui::InputTextWithHint("URL##URL02Name", "", &URLButton02Name))
+	{
+		s_settings.SetButton02Name(URLButton02Name);
+	}
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(-120.f);
+	static std::string URL02Button = s_settings.Button02URL();
+	if (ImGui::InputTextWithHint("##URL02", "", &URL02Button))
+	{
+		s_settings.SetButton02URL(URL02Button);
+	}
+
+	ImGui::NewLine();
+	ImGui::Text("Custom Buttons");
+	ImGui::Separator();
+	ImGui::Text("1. Name");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(80.f);
+	static std::string CustomButton01Name = s_settings.Cust01ButtonName();
+	if (ImGui::InputTextWithHint("Action##Name01", "Keep", &CustomButton01Name))
+	{
+		s_settings.SetCust01Name(CustomButton01Name);
+	}
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(-120.f);
+	static std::string CustomButton01Action = s_settings.Cust01ButtonAction();
+	if (ImGui::InputText("##Action01", &CustomButton01Action))
+	{
+		s_settings.SetCust01Action(CustomButton01Action);
+	}
+	ImGui::SameLine();
+	bool showCustom01PickupItem = s_settings.IsCust01PickupItemEnabled();
+	if (ImGui::Checkbox("Pickup##01", &showCustom01PickupItem))
+	{
+		s_settings.SetCust01PickupItemEnabled(showCustom01PickupItem);
+	}
+
+	ImGui::Text("2. Name");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(80.f);
+	static std::string CustomButton02Name = s_settings.Cust02ButtonName();
+	if (ImGui::InputTextWithHint("Action##Name02", "Sell", &CustomButton02Name))
+	{
+		s_settings.SetCust02Name(CustomButton02Name);
+	}
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(-120.f);
+	static std::string CustomButton02Action = s_settings.Cust02ButtonAction();
+	if (ImGui::InputText("##Action02", &CustomButton02Action))
+	{
+		s_settings.SetCust02Action(CustomButton02Action);
+	}
+	ImGui::SameLine();
+	bool showCustom02PickupItem = s_settings.IsCust02PickupItemEnabled();
+	if (ImGui::Checkbox("Pickup##02", &showCustom02PickupItem))
+	{
+		s_settings.SetCust02PickupItemEnabled(showCustom02PickupItem);
+	}
+
+	ImGui::Text("3. Name");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(80.f);
+	static std::string CustomButton03Name = s_settings.Cust03ButtonName();
+	if (ImGui::InputTextWithHint("Action##Name03", "Bank", &CustomButton03Name))
+	{
+		s_settings.SetCust03Name(CustomButton03Name);
+	}
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(-120.f);
+	static std::string CustomButton03Action = s_settings.Cust03ButtonAction();
+	if (ImGui::InputText("##Action03", &CustomButton03Action))
+	{
+		s_settings.SetCust03Action(CustomButton03Action);
+	}
+	ImGui::SameLine();
+	bool showCustom03PickupItem = s_settings.IsCust03PickupItemEnabled();
+	if (ImGui::Checkbox("Pickup##03", &showCustom03PickupItem))
+	{
+		s_settings.SetCust03PickupItemEnabled(showCustom03PickupItem);
+	}
+
+	ImGui::Text("4. Name");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(80.f);
+	static std::string CustomButton04Name = s_settings.Cust04ButtonName();
+	if (ImGui::InputTextWithHint("Action##Name04", "Tribute", &CustomButton04Name))
+	{
+		s_settings.SetCust04Name(CustomButton04Name);
+	}
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(-120.f);
+	static std::string CustomButton04Action = s_settings.Cust04ButtonAction();
+	if (ImGui::InputText("##Action04", &CustomButton04Action))
+	{
+		s_settings.SetCust04Action(CustomButton04Action);
+	}
+	ImGui::SameLine();
+	bool showCustom04PickupItem = s_settings.IsCust04PickupItemEnabled();
+	if (ImGui::Checkbox("Pickup##04", &showCustom04PickupItem))
+	{
+		s_settings.SetCust04PickupItemEnabled(showCustom04PickupItem);
+	}
+
+	ImGui::Text("5. Name");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(80.f);
+	static std::string CustomButton05Name = s_settings.Cust05ButtonName();
+	if (ImGui::InputTextWithHint("Action##Name05", "Ignore", &CustomButton05Name))
+	{
+		s_settings.SetCust05Name(CustomButton05Name);
+	}
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(-120.f);
+	static std::string CustomButton05Action = s_settings.Cust05ButtonAction();
+	if (ImGui::InputText("##Action05", &CustomButton05Action))
+	{
+		s_settings.SetCust05Action(CustomButton05Action);
+	}
+	ImGui::SameLine();
+	bool showCustom05PickupItem = s_settings.IsCust05PickupItemEnabled();
+	if (ImGui::Checkbox("Pickup##05", &showCustom05PickupItem))
+	{
+		s_settings.SetCust05PickupItemEnabled(showCustom05PickupItem);
+	}
+
+	ImGui::Text("6. Name");
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(80.f);
+	static std::string CustomButton06Name = s_settings.Cust06ButtonName();
+	if (ImGui::InputTextWithHint("Action##Name06", "Announce", &CustomButton06Name))
+	{
+		s_settings.SetCust06Name(CustomButton06Name);
+	}
+	ImGui::SameLine();
+	ImGui::SetNextItemWidth(-120.f);
+	static std::string CustomButton06Action = s_settings.Cust06ButtonAction();
+	if (ImGui::InputText("##Action06", &CustomButton06Action))
+	{
+		s_settings.SetCust06Action(CustomButton06Action);
+	}
+	ImGui::SameLine();
+	bool showCustom06PickupItem = s_settings.IsCust06PickupItemEnabled();
+	if (ImGui::Checkbox("Pickup##06", &showCustom06PickupItem))
+	{
+		s_settings.SetCust06PickupItemEnabled(showCustom06PickupItem);
+	}
+
+	ImGui::Text("Custom variables: %%name%% %%id%% %%count%%");
+
+	ImGui::NewLine();
 	{
 		ImColor imColor = s_settings.GetItemColor().ToImColor();
 
